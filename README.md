@@ -55,10 +55,6 @@ await user.stopBroadcast()
 await user.stopMeeting()
 ```
 
-There is [an example](examples/recordings.js) service spawning a webserver that
-redirects to the specific video file if any found. Start the example with an
-api key via `API_KEY=123456789 node examples/recordings.js`.
-
 ## Development
 
 ```sh
