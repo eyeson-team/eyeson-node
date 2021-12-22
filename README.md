@@ -21,7 +21,7 @@ $ yarn add eyeson-node
 ## Usage
 
 Get an API-KEY from
-[accounts.eyeson.team/developer](https://accounts.eyeson.team/developer).
+[developers.eyeson.team/developer](https://developers.eyeson.team/developer).
 
 ```JavaScript
 const Eyeson = require('eyeson-node');
