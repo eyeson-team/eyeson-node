@@ -1,4 +1,3 @@
-
 const client = require('./client')
 const Eyeson = require('./eyeson-node')
 jest.mock('./client')

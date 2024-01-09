@@ -1,7 +1,9 @@
-const https = require('https');
+const https = require('node:https')
 
-// eyeson Api provides communication with the video conferencing service.
-module.exports = class {
+/**
+ * Eyeson API provides communication with the video conferencing service.
+ */
+class Client {
   constructor({ apiKey, hostname }) {
     this.options = { hostname, headers: { 'Content-Type': 'application/json' } }
     if (apiKey) {
@@ -29,20 +31,43 @@ module.exports = class {
       req.end()
     })
   }
-
+  /**
+   * GET request
+   * @param {string} path - API endpoint
+   * @returns {Promise}
+   */
   get(path) {
     return this._request({ path, method: 'get' })
   }
 
+  /**
+   * POST request
+   * @param {string} path - API endpoint
+   * @param {object} data - Payload
+   * @returns {Promise}
+   */
   post(path, data) {
     return this._request({ path, method: 'post' }, data)
   }
 
+  /**
+   * PUT request
+   * @param {string} path - API endpoint
+   * @param {object} data - Payload
+   * @returns {Promise}
+   */
   put(path, data) {
     return this._request({ path, method: 'put' }, data)
   }
 
+  /**
+   * DELETE request
+   * @param {string} path - API endpoint
+   * @returns {Promise}
+   */
   delete(path) {
     return this._request({ path, method: 'delete' })
   }
 }
+
+module.exports = Client

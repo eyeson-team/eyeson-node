@@ -1,4 +1,4 @@
-const http = require('http')
+const http = require('node:http')
 const port = process.env.PORT || 8201
 const Eyeson = require('../src/eyeson-node')
 

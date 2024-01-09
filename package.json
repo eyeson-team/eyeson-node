@@ -1,20 +1,30 @@
 {
   "name": "eyeson-node",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "eyeson video conferencing API package for nodejs",
-  "main": "src/eyeson-node.js",
-  "module": "src/eyeson-node.js",
+  "main": "./src/eyeson-node.js",
+  "module": "./src/eyeson-node.mjs",
+  "types": "./eyeson-node.d.ts",
+  "exports": {
+    "import": "./src/eyeson-node.mjs",
+    "require": "./src/eyeson-node.js"
+  },
   "author": "eyeson GmbH <developers@eyeson.com>",
   "license": "MIT",
   "scripts": {
-    "watch": "webpack --watch",
     "lint": "eslint src/",
     "test": "jest",
-    "build": "webpack"
+    "build": "npm run types",
+    "types": "tsc --skipLibCheck"
+  },
+  "dependencies": {
+    "@anycable/core": "^0.7.11",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
-    "eslint": "^7.31.0",
-    "jest": "^27.0.6"
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3"
   },
   "bugs": "https://github.com/eyeson-team/eyeson-node/issues",
   "repository": "github:eyeson-team/eyeson-node"
