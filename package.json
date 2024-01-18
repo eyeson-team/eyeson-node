@@ -27,5 +27,8 @@
     "typescript": "^5.3.3"
   },
   "bugs": "https://github.com/eyeson-team/eyeson-node/issues",
-  "repository": "github:eyeson-team/eyeson-node"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eyeson-team/eyeson-node.git"
+  }
 }
