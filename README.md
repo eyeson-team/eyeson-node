@@ -236,7 +236,7 @@ The `LayerObject` is just an object containing `type` and all its settings. It's
 ```js
 const user = eyeson.join(...)
 const overlay = new Eyeson.Layer({ widescreen: true })
-const timeEntry = layer.addTextBox(new Date().toLocaleTimeString(), font, fontColor, x, y, origin, padding, maxWidth, radius, backgroundColor)
+const timeEntry = overlay.addTextBox(new Date().toLocaleTimeString(), font, fontColor, x, y, origin, padding, maxWidth, radius, backgroundColor)
 await user.sendLayer(overlay)
 setTimeout(async () => {
     timeEntry.text = new Date().toLocaleTimeString()
