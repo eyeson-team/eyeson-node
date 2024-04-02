@@ -88,14 +88,13 @@ class User {
   }
 
   /**
-   * Send message
+   * Send custom message
    * @see https://docs.eyeson.com/docs/rest/references/messages
-   * @param {string} type - e.g. "custom"
    * @param {string} content
    * @returns {Promise}
    */
-  sendCustomMessage(type, content) {
-    return this.api.post(`/rooms/${this.accessKey}/messages`, { type, content })
+  sendCustomMessage(content) {
+    return this.api.post(`/rooms/${this.accessKey}/messages`, { type: 'custom', content })
   }
 
   /**

@@ -89,7 +89,7 @@ await user.startPlayback({ play_id, url })
 await user.stopPlayback(play_id)
 
 // Send a custom message
-await user.sendCustomMessage('custom', message)
+await user.sendCustomMessage(message)
 
 // Create a snapshot
 await user.snapshot()

@@ -524,13 +524,12 @@ declare module "user" {
          */
         chat(content: string): Promise<any>;
         /**
-         * Send message
+         * Send custom message
          * @see https://docs.eyeson.com/docs/rest/references/messages
-         * @param {string} type - e.g. "custom"
          * @param {string} content
          * @returns {Promise}
          */
-        sendCustomMessage(type: string, content: string): Promise<any>;
+        sendCustomMessage(content: string): Promise<any>;
         /**
          * Start recording
          * @see https://docs.eyeson.com/docs/rest/references/recording
