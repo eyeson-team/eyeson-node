@@ -164,10 +164,10 @@ import fsPromise from 'node:fs/promise'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 const user = await eyeson.join(username)
 const imageBuffer = await fsPromise.readFile('./overlay.png')
-await user.sendLayer(imageBuffer, 'png')
+await user.sendLayer(imageBuffer, 1, 'png')
 // or as jpg:
 const imageBuffer = await fsPromise.readFile('./overlay.jpg')
-await user.sendLayer(imageBuffer, 'jpg')
+await user.sendLayer(imageBuffer, 1, 'jpg')
 ```
 
 Here's a list of all Layer methods:
