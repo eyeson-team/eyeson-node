@@ -19,6 +19,9 @@
   },
   "dependencies": {
     "@anycable/core": "^0.7.11",
+    "@napi-rs/canvas": "^0.1.51",
+    "@types/ws": "^8.5.10",
+    "form-data": "^4.0.0",
     "ws": "^8.16.0"
   },
   "devDependencies": {

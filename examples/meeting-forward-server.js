@@ -18,10 +18,10 @@ const requestHandler = async (request, response) => {
   try {
     const user = await eyeson.join('eyeson-node-demo', id)
     console.debug(user.data.links)
-    response.writeHead(302, { 'Location': user.data.links.gui });
-    response.end();
+    response.writeHead(302, { 'Location': user.data.links.gui })
+    response.end()
   } catch(err) {
-		response.end('Could not start a meeting: ' + err);
+		response.end('Could not start a meeting: ' + err)
   }
 }
 

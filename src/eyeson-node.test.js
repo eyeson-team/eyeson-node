@@ -14,6 +14,50 @@ describe('join', () => {
   })
 })
 
+describe('user', () => {
+  it('get user by access key', async () => {
+    const user = await eyeson.getUser('access-key')
+    expect(user.accessKey).toEqual('access-key')
+  })
+})
+
+describe('guest', () => {
+  it('register guest user with token', async () => {
+    const user = await eyeson.registerGuest('username', 'guest-token')
+    expect(user.accessKey).toEqual('access-key')
+  })
+})
+
+describe('snapshots', () => {
+  it('get snapshot data', async () => {
+    const snapshot = await eyeson.getSnapshot('snapshot-id')
+    expect(snapshot.id).toEqual('snapshot-id')
+  })
+
+  it('provides a method to delete snapshot', async () => {
+    await eyeson.deleteSnapshot('snapshot-id')
+  })
+
+  it('provides a method to get all snapshots of a room', async () => {
+    await eyeson.getRoomSnapshots('room-id')
+  })
+})
+
+describe('recordings', () => {
+  it('get recording data', async () => {
+    const recording = await eyeson.getRecording('recording-id')
+    expect(recording.id).toEqual('recording-id')
+  })
+
+  it('provides a method to delete recording', async () => {
+    await eyeson.deleteRecording('recording-id')
+  })
+
+  it('provides a method to get all recordings of a room', async () => {
+    await eyeson.getRoomRecordings('room-id')
+  })
+})
+
 describe('user.ready', () => {
   it('checks if a user is ready', async () => {
     const user = await eyeson.join('username')
@@ -50,12 +94,17 @@ describe('user.playback', () => {
     const user = await eyeson.join('username')
     await user.startPlayback({ url: 'https://eyeson.com/video.mp4' })
   })
+
+  it('provides a method to stop a playback', async () => {
+    const user = await eyeson.join('username')
+    await user.stopPlayback('playback')
+  })
 })
 
 describe('user.layout', () => {
   it('provides a method to set a layout', async () => {
     const user = await eyeson.join('username')
-    await user.setLayout({ 'show_names': false })
+    await user.setLayout({ show_names: false })
   })
 })
 
@@ -80,6 +129,20 @@ describe('user.broadcast', () => {
   it('provides a method to stop broadcasting', async () => {
     const user = await eyeson.join('username')
     await user.stopBroadcast()
+  })
+})
+
+describe('user.snapshot', () => {
+  it('provides a method to create a snapshot', async () => {
+    const user = await eyeson.join('username')
+    await user.snapshot()
+  })
+})
+
+describe('user.lock', () => {
+  it('provides a method to lock a meeting', async () => {
+    const user = await eyeson.join('username')
+    await user.lockMeeting()
   })
 })
 

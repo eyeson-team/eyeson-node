@@ -1,9 +1,17 @@
 
 const mockRoom = {
   ready: true,
-  'access_key': 'access-key',
+  access_key: 'access-key',
   links: { 'guest_join': 'https://guest-link/' },
   user: { id: 'user-id' }
+}
+
+const mockSnapshot = {
+  id: 'snapshot-id',
+}
+
+const mockRecording = {
+  id: 'recording-id',
 }
 
 const mockResponses = {
@@ -15,9 +23,16 @@ const mockResponses = {
     '/rooms/access-key/messages': {},
     '/rooms/access-key/playbacks': {},
     '/rooms/access-key/recording': {},
+    '/rooms/access-key/snapshot': {},
+    '/rooms/access-key/lock': {},
+    '/guests/guest-token': mockRoom,
   },
   get: {
     '/rooms/access-key': mockRoom,
+    '/rooms/room-id/snapshots': [],
+    '/rooms/room-id/recordings': [],
+    '/snapshots/snapshot-id': mockSnapshot,
+    '/recordings/recording-id': mockRecording,
   }
 }
 
@@ -45,4 +60,4 @@ const mock = jest.fn().mockImplementation(() => {
   }
 })
 
-module.exports = mock;
+module.exports = mock
