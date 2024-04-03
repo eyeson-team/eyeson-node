@@ -1,4 +1,3 @@
-const Layer = require('./layer')
 const FormData = require('form-data')
 
 // A helper method to sleep/block.
@@ -188,15 +187,20 @@ class User {
   }
 
   /**
+   * @typedef {object} EyesonLayer
+   * @prop {Function} createBuffer
+   */
+
+  /**
    * Send layer
    * @see https://docs.eyeson.com/docs/rest/references/layers
-   * @param {Layer|Buffer} buffer - Eyeson.Layer object or image file buffer
+   * @param {Buffer|EyesonLayer} buffer - Layer object or image file buffer
    * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
    * @param {'png'|'jpg'} [imageType] - image type of buffer, default "png"
    * @returns {Promise}
    */
   sendLayer(buffer, zIndex = 1, imageType = 'png') {
-    if (buffer instanceof Layer) {
+    if (buffer && typeof buffer === 'object' && typeof buffer.createBuffer === 'function') {
       buffer = buffer.createBuffer()
     }
     const formData = new FormData()

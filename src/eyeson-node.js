@@ -1,7 +1,6 @@
 const Client = require('./client')
 const User = require('./user')
 const observer = require('./observer')
-const Layer = require('./layer')
 
 const hostname = 'api.eyeson.team'
 
@@ -226,7 +225,5 @@ class Eyeson {
     return this.api.delete(`/recordings/${recordingId}`)
   }
 }
-
-Eyeson.Layer = Layer
 
 module.exports = Eyeson

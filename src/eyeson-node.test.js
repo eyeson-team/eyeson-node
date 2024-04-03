@@ -1,6 +1,7 @@
 const client = require('./client')
 const Eyeson = require('./eyeson-node')
 jest.mock('./client')
+jest.mock('form-data')
 
 const apiKey = 'api-key'
 const eyeson = new Eyeson({ apiKey })
@@ -81,6 +82,15 @@ describe('user.layer', () => {
   it('provides a method to set a layer', async () => {
     const user = await eyeson.join('username')
     await user.setLayer({ url: 'https://eyeson.com/background-image.png' })
+  })
+
+  it('provides a method to send a layer from image buffer', async () => {
+    const user = await eyeson.join('username')
+    const layer = {
+      createBuffer: jest.fn(() => null),
+    };
+    await user.sendLayer(layer)
+    expect(layer.createBuffer).toHaveBeenCalledTimes(1)
   })
 
   it('provides a method to unset a layer', async () => {

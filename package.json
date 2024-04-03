@@ -1,6 +1,6 @@
 {
   "name": "eyeson-node",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "eyeson video conferencing API package for nodejs",
   "main": "./src/eyeson-node.js",
   "module": "./src/eyeson-node.mjs",
@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@anycable/core": "^0.7.11",
-    "@napi-rs/canvas": "^0.1.51",
     "@types/ws": "^8.5.10",
     "form-data": "^4.0.0",
     "ws": "^8.16.0"
