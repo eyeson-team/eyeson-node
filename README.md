@@ -113,6 +113,8 @@ await user.sendLayer(imageBuffer, 1, 'png')
 // or as jpg:
 const imageBuffer = await fsPromise.readFile('./overlay.jpg')
 await user.sendLayer(imageBuffer, 1, 'jpg')
+// add an ID to check when it can be seen
+await user.sendLayer(imageBuffer, 1, 'jpg', 'overlay-jpg')
 ```
 
 Using the new [eyeson-node-layer](https://github.com/eyeson-team/eyeson-node-layer) plugin you can create and send layers with ease.
