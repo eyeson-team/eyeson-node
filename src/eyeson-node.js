@@ -1,18 +1,58 @@
 const Client = require('./client')
 const User = require('./user')
 const observer = require('./observer')
+const permalink = require('./permalink')
 
 const hostname = 'api.eyeson.team'
+
+/**
+ * @typedef {object} EyesonConfig
+ * @prop {string} apiKey
+ *
+ * @typedef {object} UserParameters
+ * @prop {string} [id] - custom user id, if empty, a random id will be assigned
+ * @prop {string} [avatar] - url
+ * 
+ * @typedef {object} AudioInsertPosition
+ * @prop {number} [x]
+ * @prop {number} [y]
+ * 
+ * @typedef {object} CustomFieldOptions
+ * @prop {string} [locale] - User preferred language code ('en', 'de', 'fr').
+ * @prop {string} [logo] - URL to custom logo.
+ * @prop {boolean} [hide_chat] - Hide chat in GUI. Default: false
+ * @prop {boolean} [virtual_background] - Enable Virtual Background selection. Default: false
+ * @prop {boolean} [virtual_background_allow_guest] - Enable Virtual Background selection for Guest users. Default: false
+ * @prop {string} [virtual_background_image] - Provide a custom Virtual Background image for selection.
+ * 
+ * @typedef {object} MeetingOptions
+ * @prop {boolean} [show_names] - Show display names in video. Default: true
+ * @prop {boolean} [show_label] - Show Eyeson logos in GUI. Default: true
+ * @prop {string} [exit_url] - Exit destination, URL for exit button in GUI
+ * @prop {boolean} [recording_available] - Allow recordings. Default: true
+ * @prop {boolean} [broadcast_available] - Allow broadcasting. Default: true
+ * @prop {boolean} [reaction_available] - Show gif media inserts in GUI. Default: true
+ * @prop {boolean} [layout_available] - Allow layout updates. Default: true
+ * @prop {boolean} [guest_token_available] - Provide guest token. Default: true
+ * @prop {boolean} [lock_available] - Enable meeting lock. Default: false
+ * @prop {boolean} [kick_available] - Allow participant kick. Default: true
+ * @prop {'disabled'|'screencast'|'ptp'} [sfu_mode] - Set a desired sfu mode. Default: 'ptp'
+ * @prop {boolean} [widescreen] - Run meeting in widescreen mode (16:9 aspect ratio). Default: false
+ * @prop {string} [background_color] - Set meeting background color as hex RGB. Default: '#121212'
+ * @prop {'enabled'|'disabled'|'audio_only'} [audio_insert] - Show audio insert. Default: 'audio_only'
+ * @prop {AudioInsertPosition} [audio_insert_position] - Position of the audio insert.
+ * @prop {CustomFieldOptions & Record<string, any>} [custom_fields]
+ * 
+ * @typedef {object} MeetingParameters
+ * @prop {string} [name] - room name
+ * @prop {UserParameters} [user]
+ * @prop {MeetingOptions} [options]
+ */
 
 /**
  * Class Eyeson
  */
 class Eyeson {
-  /**
-   * @typedef {object} EyesonConfig
-   * @prop {string} apiKey
-   */
-
   /**
    * @param {EyesonConfig} config
    */
@@ -25,48 +65,8 @@ class Eyeson {
      * @see https://docs.eyeson.com/docs/category/meeting-observer
      */
     this.observer = new observer.Observer({ hostname, ...config })
+    this.permalink = new permalink.PermalinkAPI(this.api)
   }
-
-  /**
-   * @typedef {object} UserParameters
-   * @prop {string} [id] - custom user id, if empty, a random id will be assigned
-   * @prop {string} [avatar] - url
-   * 
-   * @typedef {object} AudioInsertPosition
-   * @prop {number} [x]
-   * @prop {number} [y]
-   * 
-   * @typedef {object} CustomFieldOptions
-   * @prop {string} [locale] - User preferred language code ('en', 'de', 'fr').
-   * @prop {string} [logo] - URL to custom logo.
-   * @prop {boolean} [hide_chat] - Hide chat in GUI. Default: false
-   * @prop {boolean} [virtual_background] - Enable Virtual Background selection. Default: false
-   * @prop {boolean} [virtual_background_allow_guest] - Enable Virtual Background selection for Guest users. Default: false
-   * @prop {string} [virtual_background_image] - Provide a custom Virtual Background image for selection.
-   * 
-   * @typedef {object} MeetingOptions
-   * @prop {boolean} [show_names] - Show display names in video. Default: true
-   * @prop {boolean} [show_label] - Show Eyeson logos in GUI. Default: true
-   * @prop {string} [exit_url] - Exit destination, URL for exit button in GUI
-   * @prop {boolean} [recording_available] - Allow recordings. Default: true
-   * @prop {boolean} [broadcast_available] - Allow broadcasting. Default: true
-   * @prop {boolean} [reaction_available] - Show gif media inserts in GUI. Default: true
-   * @prop {boolean} [layout_available] - Allow layout updates. Default: true
-   * @prop {boolean} [guest_token_available] - Provide guest token. Default: true
-   * @prop {boolean} [lock_available] - Enable meeting lock. Default: false
-   * @prop {boolean} [kick_available] - Allow participant kick. Default: true
-   * @prop {'disabled'|'screencast'|'ptp'} [sfu_mode] - Set a desired sfu mode. Default: 'ptp'
-   * @prop {boolean} [widescreen] - Run meeting in widescreen mode (16:9 aspect ratio). Default: false
-   * @prop {string} [background_color] - Set meeting background color as hex RGB. Default: '#121212'
-   * @prop {'enabled'|'disabled'|'audio_only'} [audio_insert] - Show audio insert. Default: 'audio_only'
-   * @prop {AudioInsertPosition} [audio_insert_position] - Position of the audio insert.
-   * @prop {CustomFieldOptions & Record<string, any>} [custom_fields]
-   * 
-   * @typedef {object} MeetingParameters
-   * @prop {string} [name] - room name
-   * @prop {UserParameters} [user]
-   * @prop {MeetingOptions} [options]
-   */
 
   /**
    * Create a new meeting or join an existing by roomId

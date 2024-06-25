@@ -161,6 +161,40 @@ connection.on('event', event => {
 connection.close() // closes automatically on shutdown
 ```
 
+### Permalink API
+
+Since version 1.3.0, eyeson-node includes functions to use with Permalink API.
+You can read more about it here: https://docs.eyeson.com/docs/rest/features/permalink
+
+```js
+import Eyeson from 'eyeson-node'
+const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
+
+const permalink = await eyeson.permalink.create('<username>', {
+    name: '<room_name>',
+    user: { id: '<user-id>' },
+    options: { widescreen: true },
+})
+console.log(permalink.userToken, permalink.guestToken, permalink.data.links.gui, permalink.data.links.guest_join)
+
+const list = await eyeson.permalink.getAll({ limit: 50, expired: false })
+
+const permalink = await eyeson.permalink.getbyId('<permalink-id>') // can also be used to update "permalink.started"
+
+const permalink = await eyeson.permalink.update('<permalink-id>', { options: { widescreen: false } })
+
+await eyeson.permalink.delete('<permalink-id>')
+
+const permalink = await eyeson.permalink.addUser('<permalink-id>', '<username>', { id: '<user-id>' })
+console.log(permalink.userToken, permalink.data.links.gui)
+
+await eyeson.permalink.removeUser('<permalink-id>', '<user-token>')
+
+const user = await eyeson.permalink.joinMeeting('<user-token>')
+
+const guest = await eyeson.permalink.registerGuest('<username>', '<guest-token>', { id: '<user-id>' }) // works only if permalink.started === true
+```
+
 ## Development
 
 ```sh
@@ -171,6 +205,8 @@ $ npm run build
 
 ## Releases
 
+- 1.3.0 New: Permalink API
+- 1.2.1 sendLayer: add layer id parameter
 - 1.2.0 New functions; Layer updates
 - 1.1.0 Import/require; Type declaration; Meeting observer
 - 1.0.0 Initial release
