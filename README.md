@@ -109,12 +109,12 @@ import fsPromise from 'node:fs/promise'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 const user = await eyeson.join(username)
 const imageBuffer = await fsPromise.readFile('./overlay.png')
-await user.sendLayer(imageBuffer, 1, 'png')
+await user.sendLayer(imageBuffer, 1)
 // or as jpg:
 const imageBuffer = await fsPromise.readFile('./overlay.jpg')
-await user.sendLayer(imageBuffer, 1, 'jpg')
+await user.sendLayer(imageBuffer, 1)
 // add an ID to check when it can be seen
-await user.sendLayer(imageBuffer, 1, 'jpg', 'overlay-jpg')
+await user.sendLayer(imageBuffer, 1, 'overlay-jpg')
 ```
 
 Using the new [eyeson-node-layer](https://github.com/eyeson-team/eyeson-node-layer) plugin you can create and send layers with ease.
@@ -205,6 +205,7 @@ $ npm run build
 
 ## Releases
 
+- 1.3.1 sendLayer: imageType only needed with EyesonLayer
 - 1.3.0 New: Permalink API
 - 1.2.1 sendLayer: add layer id parameter
 - 1.2.0 New functions; Layer updates

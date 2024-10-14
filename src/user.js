@@ -196,19 +196,19 @@ class User {
    * @see https://docs.eyeson.com/docs/rest/references/layers
    * @param {Buffer|EyesonLayer} buffer - Layer object or image file buffer
    * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
-   * @param {'png'|'jpg'} [imageType] - image type of buffer, default "png"
    * @param {String} [id] - layer id, default empty
+   * @param {'image/png'|'image/jpeg'|'image/webp'} [imageType] - image type if buffer is EyesonLayer, default "image/png"
+   * @param {number} [imageQuality] - image quality if buffer is EyesonLayer, default 1
    * @returns {Promise}
    */
-  sendLayer(buffer, zIndex = 1, imageType = 'png', id = '') {
+  sendLayer(buffer, zIndex = 1, id = '', imageType = 'image/png', imageQuality = 1) {
     if (buffer && typeof buffer === 'object' && typeof buffer.createBuffer === 'function') {
-      buffer = buffer.createBuffer()
+      buffer = buffer.createBuffer(imageType, imageQuality)
     }
-    const ending = imageType === 'jpg' ? 'jpg' : 'png'
     const formData = new FormData()
-    formData.append('file', buffer, { filename: `image.${ending}` })
+    formData.append('file', buffer, { filename: 'blob' })
     formData.append('z-index', zIndex)
-    if (id !== '') {
+    if (typeof id === 'string' && id !== '') {
       formData.append('id', id)
     }
     return this.api.post(`/rooms/${this.accessKey}/layers`, formData)
