@@ -160,13 +160,13 @@ declare module "user" {
          * @returns {Promise}
          */
         setLayout(options: {
-            layout?: 'auto' | 'custom';
+            layout?: "auto" | "custom";
             name?: string;
             map?: string | Array<(string | number)[]>;
             users?: Array<string>;
             show_names?: boolean;
             voice_activation?: boolean;
-            audio_insert?: 'enabled' | 'disabled' | 'audio_only';
+            audio_insert?: "enabled" | "disabled" | "audio_only";
             audio_insert_position?: {
                 x?: number;
                 y?: number;
@@ -202,7 +202,7 @@ declare module "user" {
             /**
              * - "-1" for background or "1" (default) for foreground position
              */
-            "z-index"?: 1 | -1 | '1' | '-1';
+            "z-index"?: 1 | -1 | "1" | "-1";
         }): Promise<any>;
         /**
          * @typedef {object} EyesonLayer
@@ -213,19 +213,20 @@ declare module "user" {
          * @see https://docs.eyeson.com/docs/rest/references/layers
          * @param {Buffer|EyesonLayer} buffer - Layer object or image file buffer
          * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
-         * @param {'png'|'jpg'} [imageType] - image type of buffer, default "png"
          * @param {String} [id] - layer id, default empty
+         * @param {'image/png'|'image/jpeg'|'image/webp'} [imageType] - image type if buffer is EyesonLayer, default "image/png"
+         * @param {number} [imageQuality] - image quality if buffer is EyesonLayer, default 1
          * @returns {Promise}
          */
         sendLayer(buffer: Buffer | {
             createBuffer: Function;
-        }, zIndex?: 1 | -1 | '1' | '-1', imageType?: 'png' | 'jpg', id?: string): Promise<any>;
+        }, zIndex?: 1 | -1 | "1" | "-1", id?: string, imageType?: "image/png" | "image/jpeg" | "image/webp", imageQuality?: number): Promise<any>;
         /**
          * Clear layer
          * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
          * @returns {Promise}
          */
-        clearLayer(zIndex?: 1 | -1 | '1' | '-1'): Promise<any>;
+        clearLayer(zIndex?: 1 | -1 | "1" | "-1"): Promise<any>;
         /**
          * @typedef {object} PlaybackEntry
          * @prop {string} url - Hosted MP4/WEBM video or MP3 audio file
@@ -245,31 +246,6 @@ declare module "user" {
          * @returns {Promise}
          */
         startPlayback(options: {
-            /**
-             * - Hosted MP4/WEBM video or MP3 audio file
-             */
-            url: string;
-            /**
-             * - default false
-             */
-            audio?: boolean;
-            /**
-             * - identifier, e.g. current timestamp or use a custom layout position identifier
-             */
-            play_id?: string;
-            /**
-             * - User-id of the participant's video to be replaced
-             */
-            replacement_id?: string;
-            /**
-             * - Custom readable name for identification
-             */
-            name?: string;
-            /**
-             * - Number of repetitions. Set -1 for infinite loop. Default: 0
-             */
-            loop_count?: number;
-        } | {
             playback: {
                 /**
                  * - Hosted MP4/WEBM video or MP3 audio file
@@ -296,6 +272,31 @@ declare module "user" {
                  */
                 loop_count?: number;
             };
+        } | {
+            /**
+             * - Hosted MP4/WEBM video or MP3 audio file
+             */
+            url: string;
+            /**
+             * - default false
+             */
+            audio?: boolean;
+            /**
+             * - identifier, e.g. current timestamp or use a custom layout position identifier
+             */
+            play_id?: string;
+            /**
+             * - User-id of the participant's video to be replaced
+             */
+            replacement_id?: string;
+            /**
+             * - Custom readable name for identification
+             */
+            name?: string;
+            /**
+             * - Number of repetitions. Set -1 for infinite loop. Default: 0
+             */
+            loop_count?: number;
         }): Promise<any>;
         /**
          * Stop playback by play_id
@@ -479,7 +480,7 @@ declare module "permalink" {
          * @param {import('./eyeson-node.js').UserParameters} [params]
          * @returns {Promise<Permalink>}
          */
-        addUser(permalinkId: string, username: string, params?: import('./eyeson-node.js').UserParameters): Promise<Permalink>;
+        addUser(permalinkId: string, username: string, params?: import("eyeson-node").UserParameters): Promise<Permalink>;
         /**
          * Remove user from Permalink to invalidate user-token
          * @see https://docs.eyeson.com/docs/rest/features/permalink/#remove-host-user-from-permalink
@@ -503,7 +504,7 @@ declare module "permalink" {
          * @param {import('./eyeson-node.js').GuestUserParams} [params]
          * @returns {Promise<User>}
          */
-        registerGuest(username: string, guestToken: string, params?: any): Promise<User>;
+        registerGuest(username: string, guestToken: string, params?: import("eyeson-node").GuestUserParams): Promise<User>;
     }
     /**
      * Permalink wrapper object
@@ -783,7 +784,7 @@ declare module "eyeson-node" {
         /**
          * - Set a desired sfu mode. Default: 'ptp'
          */
-        sfu_mode?: 'disabled' | 'screencast' | 'ptp';
+        sfu_mode?: "disabled" | "screencast" | "ptp";
         /**
          * - Run meeting in widescreen mode (16:9 aspect ratio). Default: false
          */
@@ -795,7 +796,7 @@ declare module "eyeson-node" {
         /**
          * - Show audio insert. Default: 'audio_only'
          */
-        audio_insert?: 'enabled' | 'disabled' | 'audio_only';
+        audio_insert?: "enabled" | "disabled" | "audio_only";
         /**
          * - Position of the audio insert.
          */

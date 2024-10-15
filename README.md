@@ -205,6 +205,7 @@ $ npm run build
 
 ## Releases
 
+- 1.3.2 update type declarations
 - 1.3.1 sendLayer: imageType only needed with EyesonLayer
 - 1.3.0 New: Permalink API
 - 1.2.1 sendLayer: add layer id parameter
