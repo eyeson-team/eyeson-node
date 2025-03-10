@@ -6,7 +6,7 @@ client that allows to easily build applications that can start and manage
 eyeson video conferences.
 
 A full API documentation including all features is available at
-[docs.eyeson.com/docs/rest/intro/](https://docs.eyeson.com/docs/rest/intro/).
+[docs.eyeson.com/docs/rest/eyeson-overview/](https://docs.eyeson.com/docs/rest/eyeson-overview/).
 
 ## Installation
 
@@ -33,7 +33,7 @@ represents which room to join. Users joining the same room-id will be
 connected. If you do not specify an identifier, there will be a new meeting
 created with every join request.
 
-Read more about creating a new meeting https://docs.eyeson.com/docs/rest/references/room
+Read more about creating a new meeting https://docs.eyeson.com/docs/rest/references/meeting-room
 
 ```js
 const user = await eyeson.join(username, roomIdentifier, options)
@@ -136,7 +136,7 @@ setTimeout(async () => {
 ### Meeting observer
 
 Since version 1.1.0, eyeson-node has the meeting observer included. You can
-read more about it here: https://docs.eyeson.com/docs/category/meeting-observer
+read more about it here: https://docs.eyeson.com/docs/rest/advanced/meeting_observer
 
 ```js
 import Eyeson from 'eyeson-node'
@@ -164,7 +164,7 @@ connection.close() // closes automatically on shutdown
 ### Permalink API
 
 Since version 1.3.0, eyeson-node includes functions to use with Permalink API.
-You can read more about it here: https://docs.eyeson.com/docs/rest/features/permalink
+You can read more about it here: https://docs.eyeson.com/docs/rest/advanced/permalink_api
 
 ```js
 import Eyeson from 'eyeson-node'
