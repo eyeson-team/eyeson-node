@@ -1,7 +1,7 @@
 
 # eyeson-node JavaScript API Library
 
-A NodeJS library for the [Eyeson](https://www.eyeson.com) API. It provides a
+A Node.js library for the [Eyeson](https://www.eyeson.com) API. It provides a
 client that allows to easily build applications that can start and manage
 eyeson video conferences.
 
