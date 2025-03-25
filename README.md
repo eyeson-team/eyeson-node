@@ -117,7 +117,7 @@ await user.sendLayer(imageBuffer, 1)
 await user.sendLayer(imageBuffer, 1, 'overlay-jpg')
 ```
 
-Using the new [eyeson-node-layer](https://github.com/eyeson-team/eyeson-node-layer) plugin you can create and send layers with ease.
+Using the new [eyeson-node-layer](https://github.com/eyeson-team/eyeson-node-layer), or [eyeson-node-svg-layer](https://github.com/eyeson-team/eyeson-node-svg-layer) plugin, you can create and send layers with ease.
 
 ```js
 import Eyeson from 'eyeson-node'
@@ -205,6 +205,7 @@ $ npm run build
 
 ## Releases
 
+- 1.3.3 sendLayer: add EyesonSvgLayer support
 - 1.3.2 update type declarations
 - 1.3.1 sendLayer: imageType only needed with EyesonLayer
 - 1.3.0 New: Permalink API

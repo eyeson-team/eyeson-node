@@ -207,11 +207,14 @@ declare module "user" {
         /**
          * @typedef {object} EyesonLayer
          * @prop {Function} createBuffer
+         *
+         * @typedef {object} EyesonSvgLayer
+         * @prop {Function} createSVG
          */
         /**
          * Send layer
          * @see https://docs.eyeson.com/docs/rest/references/layers
-         * @param {Buffer|EyesonLayer} buffer - Layer object or image file buffer
+         * @param {Buffer|EyesonLayer|EyesonSvgLayer} buffer - Layer object or image file buffer
          * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
          * @param {String} [id] - layer id, default empty
          * @param {'image/png'|'image/jpeg'|'image/webp'} [imageType] - image type if buffer is EyesonLayer, default "image/png"
@@ -220,6 +223,8 @@ declare module "user" {
          */
         sendLayer(buffer: Buffer | {
             createBuffer: Function;
+        } | {
+            createSVG: Function;
         }, zIndex?: 1 | -1 | "1" | "-1", id?: string, imageType?: "image/png" | "image/jpeg" | "image/webp", imageQuality?: number): Promise<any>;
         /**
          * Clear layer

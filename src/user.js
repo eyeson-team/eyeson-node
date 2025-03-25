@@ -58,7 +58,6 @@ class User {
    * @returns {Promise<void>}
    */
   waitReady() {
-    /* eslint-disable no-async-promise-executor */
     return new Promise(async (resolve, reject) => {
       try {
         const timeout = setTimeout(() => reject('User ready timeout.'), 30000)
@@ -73,7 +72,6 @@ class User {
         reject(err)
       }
     })
-    /* eslint-enable no-async-promise-executor */
   }
 
   /**
@@ -189,12 +187,15 @@ class User {
   /**
    * @typedef {object} EyesonLayer
    * @prop {Function} createBuffer
+   * 
+   * @typedef {object} EyesonSvgLayer
+   * @prop {Function} createSVG
    */
 
   /**
    * Send layer
    * @see https://docs.eyeson.com/docs/rest/references/layers
-   * @param {Buffer|EyesonLayer} buffer - Layer object or image file buffer
+   * @param {Buffer|EyesonLayer|EyesonSvgLayer} buffer - Layer object or image file buffer
    * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
    * @param {String} [id] - layer id, default empty
    * @param {'image/png'|'image/jpeg'|'image/webp'} [imageType] - image type if buffer is EyesonLayer, default "image/png"
@@ -204,6 +205,9 @@ class User {
   sendLayer(buffer, zIndex = 1, id = '', imageType = 'image/png', imageQuality = 1) {
     if (buffer && typeof buffer === 'object' && typeof buffer.createBuffer === 'function') {
       buffer = buffer.createBuffer(imageType, imageQuality)
+    }
+    if (buffer && typeof buffer === 'object' && typeof buffer.createSVG === 'function') {
+      buffer = buffer.createSVG()
     }
     const formData = new FormData()
     formData.append('file', buffer, { filename: 'blob' })
