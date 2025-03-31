@@ -2,6 +2,7 @@ const Client = require('./client')
 const User = require('./user')
 const observer = require('./observer')
 const permalink = require('./permalink')
+const RoomForward = require('./forward')
 
 const hostname = 'api.eyeson.team'
 
@@ -223,6 +224,15 @@ class Eyeson {
    */
   deleteRecording(recordingId) {
     return this.api.delete(`/recordings/${recordingId}`)
+  }
+
+  /**
+   * Create a room forward instance
+   * @param {string} room_id 
+   * @returns {RoomForward} forward
+   */
+  createRoomForward(room_id) {
+    return new RoomForward(this.api, room_id)
   }
 }
 

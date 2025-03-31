@@ -195,6 +195,24 @@ const user = await eyeson.permalink.joinMeeting('<user-token>')
 const guest = await eyeson.permalink.registerGuest('<username>', '<guest-token>', { id: '<user-id>' }) // works only if permalink.started === true
 ```
 
+### Forward stream
+
+In version 1.4.0, eyeson-node adds support for stream forward API functions.
+Learn more about it: https://docs.eyeson.com/docs/rest/references/forward
+
+```js
+import Eyeson from 'eyeson-node'
+const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
+
+const meeting = await eyeson.join(username)
+
+const forward = eyeson.createRoomForward(meeting.roomId)
+
+await forward.source('<forward-id>', '<user-id>', 'audio,video', 'https://example.com/whip...')
+await forward.mcu('<forward-id>', 'audio,video', 'https://example.com/whip...')
+await forward.playback('<forward-id>', '<play-id>', 'audio,video', 'https://example.com/whip...')
+```
+
 ## Development
 
 ```sh
@@ -205,6 +223,7 @@ $ npm run build
 
 ## Releases
 
+- 1.4.0 New: Forward stream
 - 1.3.3 sendLayer: add EyesonSvgLayer support
 - 1.3.2 update type declarations
 - 1.3.1 sendLayer: imageType only needed with EyesonLayer

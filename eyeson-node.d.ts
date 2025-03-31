@@ -540,6 +540,58 @@ declare module "permalink" {
     import Client = require("client");
     import User = require("user");
 }
+declare module "forward" {
+    export = RoomForward;
+    /**
+     * Class RoomForward
+     * @see https://docs.eyeson.com/docs/rest/references/forward
+     */
+    class RoomForward {
+        /**
+         * @typedef {import('./client')} Client
+         * @typedef {'audio'|'video'|'audio,video'|Array<'audio'|'video'>} ForwardType
+         */
+        /**
+         * @param {Client} api
+         * @param {string} room_id
+         */
+        constructor(api: import("client"), room_id: string);
+        api: import("client");
+        room_id: string;
+        /**
+         * Forward meeting source
+         * @param {string} forward_id - Custom, unique identifier
+         * @param {string} user_id - Custom identifier for participants or video sources
+         * @param {ForwardType} type - Forwarded audio/video channels
+         * @param {string} url - The WHIP endpoint URL
+         * @returns {Promise}
+         */
+        source(forward_id: string, user_id: string, type: "audio" | "video" | ("audio" | "video")[] | "audio,video", url: string): Promise<any>;
+        /**
+         * Forward MCU One View
+         * @param {string} forward_id - Custom, unique identifier
+         * @param {ForwardType} type - Forwarded audio/video channels
+         * @param {string} url - The WHIP endpoint URL
+         * @returns {Promise}
+         */
+        mcu(forward_id: string, type: "audio" | "video" | ("audio" | "video")[] | "audio,video", url: string): Promise<any>;
+        /**
+         * Forward meeting source
+         * @param {string} forward_id - Custom, unique identifier
+         * @param {string} play_id - Custom identifier for playbacks
+         * @param {ForwardType} type - Forwarded audio/video channels
+         * @param {string} url - The WHIP endpoint URL
+         * @returns {Promise}
+         */
+        playback(forward_id: string, play_id: string, type: "audio" | "video" | ("audio" | "video")[] | "audio,video", url: string): Promise<any>;
+        /**
+         * Stop an active forward
+         * @param {string} forward_id - Custom, unique identifier
+         * @returns {Promise}
+         */
+        stop(forward_id: string): Promise<any>;
+    }
+}
 declare module "eyeson-node" {
     export = Eyeson;
     /**
@@ -694,6 +746,12 @@ declare module "eyeson-node" {
          * @returns {Promise}
          */
         deleteRecording(recordingId: string): Promise<any>;
+        /**
+         * Create a room forward instance
+         * @param {string} room_id
+         * @returns {RoomForward} forward
+         */
+        createRoomForward(room_id: string): RoomForward;
     }
     namespace Eyeson {
         export { EyesonConfig, UserParameters, AudioInsertPosition, CustomFieldOptions, MeetingOptions, MeetingParameters };
@@ -702,6 +760,7 @@ declare module "eyeson-node" {
     import observer = require("observer");
     import permalink = require("permalink");
     import User = require("user");
+    import RoomForward = require("forward");
     type EyesonConfig = {
         apiKey: string;
     };
