@@ -211,6 +211,8 @@ const forward = eyeson.createRoomForward(meeting.roomId)
 await forward.source('<forward-id>', '<user-id>', 'audio,video', 'https://example.com/whip...')
 await forward.mcu('<forward-id>', 'audio,video', 'https://example.com/whip...')
 await forward.playback('<forward-id>', '<play-id>', 'audio,video', 'https://example.com/whip...')
+
+await forward.stop('<forward-id>')
 ```
 
 ## Development
