@@ -1,6 +1,6 @@
 const http = require('node:http')
 const port = process.env.PORT || 8201
-const Eyeson = require('../src/eyeson-node')
+const Eyeson = require('@eyeson/node')
 
 /**
  * Start with API_KEY=... node examples/meeting-forward-server.js and

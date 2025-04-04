@@ -1,5 +1,5 @@
 
-# eyeson-node JavaScript API Library
+# @eyeson/node JavaScript API Library
 
 A Node.js library for the [Eyeson](https://www.eyeson.com) API. It provides a
 client that allows to easily build applications that can start and manage
@@ -10,12 +10,12 @@ A full API documentation including all features is available at
 
 ## Installation
 
-Add eyeson-node to your JavaScript project using `npm` or `yarn`.
+Add @eyeson/node to your JavaScript project using `npm` or `yarn`.
 
 ```sh
-$ npm install --save eyeson-node
+$ npm install --save @eyeson/node
 # or
-$ yarn add eyeson-node
+$ yarn add @eyeson/node
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ Get an API-KEY from
 [developers.eyeson.team](https://developers.eyeson.team).
 
 ```js
-import Eyeson from 'eyeson-node'
+import Eyeson from '@eyeson/node'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 ```
 
@@ -103,7 +103,7 @@ await user.lockMeeting()
 You can send local images:
 
 ```js
-import Eyeson from 'eyeson-node'
+import Eyeson from '@eyeson/node'
 import fsPromise from 'node:fs/promise'
 
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
@@ -117,11 +117,11 @@ await user.sendLayer(imageBuffer, 1)
 await user.sendLayer(imageBuffer, 1, 'overlay-jpg')
 ```
 
-Using the new [eyeson-node-layer](https://github.com/eyeson-team/eyeson-node-layer), or [eyeson-node-svg-layer](https://github.com/eyeson-team/eyeson-node-svg-layer) plugin, you can create and send layers with ease.
+Using the new [@eyeson/node-layer](https://github.com/eyeson-team/eyeson-node-layer), or [@eyeson/node-svg-layer](https://github.com/eyeson-team/eyeson-node-svg-layer) plugin, you can create and send layers with ease.
 
 ```js
-import Eyeson from 'eyeson-node'
-import EyesonLayer from 'eyeson-node-layer'
+import Eyeson from '@eyeson/node'
+import EyesonLayer from '@eyeson/node-layer'
 
 const user = eyeson.join('< username >', '< room id >', { options: { widescreen: true } })
 const overlay = new EyesonLayer({ widescreen: true })
@@ -135,11 +135,11 @@ setTimeout(async () => {
 
 ### Meeting observer
 
-Since version 1.1.0, eyeson-node has the meeting observer included. You can
+Since version 1.1.0, @eyeson/node has the meeting observer included. You can
 read more about it here: https://docs.eyeson.com/docs/rest/advanced/meeting_observer
 
 ```js
-import Eyeson from 'eyeson-node'
+import Eyeson from '@eyeson/node'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 
 const meeting = await eyeson.join(username)
@@ -163,11 +163,11 @@ connection.close() // closes automatically on shutdown
 
 ### Permalink API
 
-Since version 1.3.0, eyeson-node includes functions to use with Permalink API.
+Since version 1.3.0, @eyeson/node includes functions to use with Permalink API.
 You can read more about it here: https://docs.eyeson.com/docs/rest/advanced/permalink_api
 
 ```js
-import Eyeson from 'eyeson-node'
+import Eyeson from '@eyeson/node'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 
 const permalink = await eyeson.permalink.create('<username>', {
@@ -197,11 +197,11 @@ const guest = await eyeson.permalink.registerGuest('<username>', '<guest-token>'
 
 ### Forward stream
 
-In version 1.4.0, eyeson-node adds support for stream forward API functions.
+In version 1.4.0, @eyeson/node adds support for stream forward API functions.
 Learn more about it: https://docs.eyeson.com/docs/rest/references/forward
 
 ```js
-import Eyeson from 'eyeson-node'
+import Eyeson from '@eyeson/node'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 
 const meeting = await eyeson.join(username)
@@ -225,6 +225,7 @@ $ npm run build
 
 ## Releases
 
+- 1.4.1 Move to @eyeson
 - 1.4.0 New: Forward stream
 - 1.3.3 sendLayer: add EyesonSvgLayer support
 - 1.3.2 update type declarations
