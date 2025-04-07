@@ -715,9 +715,11 @@ declare module "eyeson-node" {
          * @param {string} room_id
          * @param {number} [page] - Fetch next set of recordings (limit is 25)
          * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
+         * @param {string} [since] - ISO8601 Timestamp. Filter all snapshots since date
+         * @param {string} [until] - ISO8601 Timestamp. Filter all snapshots until date
          * @returns {Promise<Array<object>>}
          */
-        getRoomSnapshots(room_id: string, page?: number, started_at?: string): Promise<Array<object>>;
+        getRoomSnapshots(room_id: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
         /**
          * Delete snapshot
          * @param {string} snapshotId
@@ -737,15 +739,26 @@ declare module "eyeson-node" {
          * @param {string} room_id
          * @param {number} [page] - Fetch next set of recordings (limit is 25)
          * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
+         * @param {string} [since] - ISO8601 Timestamp. Filter all recordings since date
+         * @param {string} [until] - ISO8601 Timestamp. Filter all recordings until date
          * @returns {Promise<Array<object>>}
          */
-        getRoomRecordings(room_id: string, page?: number, started_at?: string): Promise<Array<object>>;
+        getRoomRecordings(room_id: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
         /**
          * Delete recording
          * @param {string} recordingId
          * @returns {Promise}
          */
         deleteRecording(recordingId: string): Promise<any>;
+        /**
+         * Retrieve list of all participants (users) of a certain room
+         * Optional filter for online users
+         * @see https://docs.eyeson.com/docs/rest/references/user#get-list-of-meeting-participants-users
+         * @param {string} room_id
+         * @param {boolean|null} isOnline
+         * @returns {Promise<Array<object>>}
+         */
+        getRoomUsers(room_id: string, isOnline?: boolean | null): Promise<Array<object>>;
         /**
          * Create a room forward instance
          * @param {string} room_id

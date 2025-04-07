@@ -70,13 +70,16 @@ Discover new functions:
 ```js
 // Snapshot info and delete
 const snapshotInfo = await eyeson.getSnapshot(snapshotId)
-const snapshots = await eyeson.getRoomSnapshots(roomId, page, startedAt)
+const snapshots = await eyeson.getRoomSnapshots(roomId, page, startedAt, since, until)
 await eyeson.deleteSnapshot(snapshotId)
 
 // Recording info and delete
 const recordingInfo = await eyeson.getRecording(recordingId)
-const recordings = await eyeson.getRoomRecordings(roomId, page, startedAt)
+const recordings = await eyeson.getRoomRecordings(roomId, page, startedAt, since, until)
 await eyeson.deleteRecording(recordingId)
+
+// list all users of a meeting
+const users = await eyeson.getRoomUsers(roomId, isOnline)
 
 // Get user object after join
 const user = await eyeson.getUser(accessKey)
@@ -225,6 +228,7 @@ $ npm run build
 
 ## Releases
 
+- 1.4.2 New: eyeson.getRoomUsers
 - 1.4.1 Move to @eyeson
 - 1.4.0 New: Forward stream
 - 1.3.3 sendLayer: add EyesonSvgLayer support

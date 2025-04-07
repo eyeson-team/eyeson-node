@@ -1,6 +1,6 @@
 {
   "name": "@eyeson/node",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "eyeson video conferencing API package for nodejs",
   "main": "./src/eyeson-node.js",
   "module": "./src/eyeson-node.mjs",

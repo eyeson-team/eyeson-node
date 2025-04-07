@@ -158,15 +158,23 @@ class Eyeson {
    * @param {string} room_id
    * @param {number} [page] - Fetch next set of recordings (limit is 25)
    * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
+   * @param {string} [since] - ISO8601 Timestamp. Filter all snapshots since date
+   * @param {string} [until] - ISO8601 Timestamp. Filter all snapshots until date
    * @returns {Promise<Array<object>>}
    */
-  getRoomSnapshots(room_id, page, started_at) {
+  getRoomSnapshots(room_id, page, started_at, since, until) {
     const params = new URLSearchParams()
     if (typeof page === 'number') {
       params.set('page', page)
     }
     if (typeof started_at == 'string' && started_at !== '') {
       params.set('started_at', started_at)
+    }
+    if (typeof since == 'string' && since !== '') {
+      params.set('since', since)
+    }
+    if (typeof until == 'string' && until !== '') {
+      params.set('until', until)
     }
     let url = `/rooms/${room_id}/snapshots`
     if (params.size > 0) {
@@ -200,15 +208,23 @@ class Eyeson {
    * @param {string} room_id
    * @param {number} [page] - Fetch next set of recordings (limit is 25)
    * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
+   * @param {string} [since] - ISO8601 Timestamp. Filter all recordings since date
+   * @param {string} [until] - ISO8601 Timestamp. Filter all recordings until date
    * @returns {Promise<Array<object>>}
    */
-  getRoomRecordings(room_id, page, started_at) {
+  getRoomRecordings(room_id, page, started_at, since, until) {
     const params = new URLSearchParams()
     if (typeof page === 'number') {
       params.set('page', page)
     }
     if (typeof started_at == 'string' && started_at !== '') {
       params.set('started_at', started_at)
+    }
+    if (typeof since == 'string' && since !== '') {
+      params.set('since', since)
+    }
+    if (typeof until == 'string' && until !== '') {
+      params.set('until', until)
     }
     let url = `/rooms/${room_id}/recordings`
     if (params.size > 0) {
@@ -224,6 +240,26 @@ class Eyeson {
    */
   deleteRecording(recordingId) {
     return this.api.delete(`/recordings/${recordingId}`)
+  }
+
+  /**
+   * Retrieve list of all participants (users) of a certain room
+   * Optional filter for online users
+   * @see https://docs.eyeson.com/docs/rest/references/user#get-list-of-meeting-participants-users
+   * @param {string} room_id 
+   * @param {boolean|null} isOnline 
+   * @returns {Promise<Array<object>>}
+   */
+  getRoomUsers(room_id, isOnline = null) {
+    const params = new URLSearchParams()
+    if (typeof isOnline === 'boolean') {
+      params.set('online', isOnline)
+    }
+    let url = `/rooms/${room_id}/users`
+    if (params.size > 0) {
+      url += '?' + params.toString()
+    }
+    return this.api.get(url)
   }
 
   /**
