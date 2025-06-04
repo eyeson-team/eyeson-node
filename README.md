@@ -228,6 +228,7 @@ $ npm run build
 
 ## Releases
 
+- 1.5.0 New: getSnapshot, shutdownRoom, webhook functions; update links
 - 1.4.2 New: eyeson.getRoomUsers
 - 1.4.1 Move to @eyeson
 - 1.4.0 New: Forward stream
