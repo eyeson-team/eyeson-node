@@ -97,8 +97,13 @@ await user.sendCustomMessage(message)
 // Create a snapshot
 await user.snapshot()
 
+// Create a snapshot
+const snapshotInfo = await user.getSnapshot(snapshotId)
+
 // Lock meeting to prevent new participants
 await user.lockMeeting()
+
+await eyeson.shutdownRoom(roomId)
 ```
 
 ### Layer updates
@@ -216,6 +221,19 @@ await forward.mcu('<forward-id>', 'audio,video', 'https://example.com/whip...')
 await forward.playback('<forward-id>', '<play-id>', 'audio,video', 'https://example.com/whip...')
 
 await forward.stop('<forward-id>')
+```
+
+### Webhook handling
+
+Read about webhooks: https://docs.eyeson.com/docs/rest/advanced/register_webhooks
+
+```js
+import Eyeson from '@eyeson/node'
+const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
+
+await eyeson.registerWebhook('<target-url>', 'room_update')
+// clear if not used anymore
+await eyeson.clearWebhook()
 ```
 
 ## Development
