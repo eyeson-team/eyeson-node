@@ -105,6 +105,7 @@ class User {
 
   /**
    * Stop recording
+   * @see https://docs.eyeson.com/docs/rest/references/recording
    * @returns {Promise}
    */
   stopRecording() {
@@ -123,6 +124,7 @@ class User {
 
   /**
    * Stop broadcast
+   * @see https://docs.eyeson.com/docs/rest/references/broadcast
    * @returns {Promise}
    */
   stopBroadcast() {
@@ -154,7 +156,7 @@ class User {
 
   /**
    * Set layout
-   * @see https://docs.eyeson.com/docs/rest/references/layout
+   * @see https://docs.eyeson.com/docs/rest/references/meeting-layout
    * @param {LayoutOptions} options - Layout options
    * @returns {Promise}
    */
@@ -220,6 +222,7 @@ class User {
 
   /**
    * Clear layer
+   * @see https://docs.eyeson.com/docs/rest/references/layers
    * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
    * @returns {Promise}
    */
@@ -270,8 +273,17 @@ class User {
   }
 
   /**
+   * Get snapshot data
+   * @see https://docs.eyeson.com/docs/rest/references/snapshot
+   * @returns {Promise<object>} snapshot
+   */
+  getSnapshot(snapshotId) {
+    return this.api.get(`/rooms/${this.accessKey}/snapshots/${snapshotId}`)
+  }
+
+  /**
    * Lock meeting
-   * @see https://docs.eyeson.com/docs/rest/references/lock
+   * @see https://docs.eyeson.com/docs/rest/references/meeting-room#lock-meeting
    * @returns {Promise}
    */
   lockMeeting() {
@@ -280,6 +292,7 @@ class User {
 
   /**
    * Stop meeting
+   * @see https://docs.eyeson.com/docs/rest/references/meeting-room#end-meeting
    * @returns {Promise}
    */
   stopMeeting() {

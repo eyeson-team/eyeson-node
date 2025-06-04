@@ -116,6 +116,7 @@ declare module "user" {
         startRecording(): Promise<any>;
         /**
          * Stop recording
+         * @see https://docs.eyeson.com/docs/rest/references/recording
          * @returns {Promise}
          */
         stopRecording(): Promise<any>;
@@ -128,6 +129,7 @@ declare module "user" {
         startBroadcast(stream_url: string): Promise<any>;
         /**
          * Stop broadcast
+         * @see https://docs.eyeson.com/docs/rest/references/broadcast
          * @returns {Promise}
          */
         stopBroadcast(): Promise<any>;
@@ -155,7 +157,7 @@ declare module "user" {
          */
         /**
          * Set layout
-         * @see https://docs.eyeson.com/docs/rest/references/layout
+         * @see https://docs.eyeson.com/docs/rest/references/meeting-layout
          * @param {LayoutOptions} options - Layout options
          * @returns {Promise}
          */
@@ -228,6 +230,7 @@ declare module "user" {
         }, zIndex?: 1 | -1 | "1" | "-1", id?: string, imageType?: "image/png" | "image/jpeg" | "image/webp", imageQuality?: number): Promise<any>;
         /**
          * Clear layer
+         * @see https://docs.eyeson.com/docs/rest/references/layers
          * @param {1|-1|'1'|'-1'} [zIndex] - Foreground = 1, background = -1, default: 1
          * @returns {Promise}
          */
@@ -317,13 +320,20 @@ declare module "user" {
          */
         snapshot(): Promise<any>;
         /**
+         * Get snapshot data
+         * @see https://docs.eyeson.com/docs/rest/references/snapshot
+         * @returns {Promise<object>} snapshot
+         */
+        getSnapshot(snapshotId: any): Promise<object>;
+        /**
          * Lock meeting
-         * @see https://docs.eyeson.com/docs/rest/references/lock
+         * @see https://docs.eyeson.com/docs/rest/references/meeting-room#lock-meeting
          * @returns {Promise}
          */
         lockMeeting(): Promise<any>;
         /**
          * Stop meeting
+         * @see https://docs.eyeson.com/docs/rest/references/meeting-room#end-meeting
          * @returns {Promise}
          */
         stopMeeting(): Promise<any>;
@@ -650,13 +660,13 @@ declare module "eyeson-node" {
          * Meeting observer
          * emits "connected", "disconnected", and "event"
          * Events can be found here:
-         * @see https://docs.eyeson.com/docs/category/meeting-observer
+         * @see https://docs.eyeson.com/docs/rest/advanced/meeting_observer
          */
         observer: observer.Observer;
         permalink: permalink.PermalinkAPI;
         /**
          * Create a new meeting or join an existing by roomId
-         * @see https://docs.eyeson.com/docs/rest/references/room
+         * @see https://docs.eyeson.com/docs/rest/references/meeting-room
          * @param {string} username - Display name of the user
          * @param {string|null} [roomId] - If not set, a random id will be returned
          * @param {MeetingParameters} [params] - { name: ..., user: {...}, options: {...} }
@@ -704,22 +714,22 @@ declare module "eyeson-node" {
         }): Promise<User>;
         /**
          * Get snapshot data
-         * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-snapshot
+         * @see https://docs.eyeson.com/docs/rest/references/snapshot
          * @param {string} snapshotId
          * @returns {Promise<object>}
          */
         getSnapshot(snapshotId: string): Promise<object>;
         /**
          * Retrieve list of all snapshots of a certain room
-         * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-list-of-all-snapshots-of-a-certain-room
-         * @param {string} room_id
+         * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-list-of-all-snapshots-of-a-room
+         * @param {string} roomId
          * @param {number} [page] - Fetch next set of recordings (limit is 25)
          * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
          * @param {string} [since] - ISO8601 Timestamp. Filter all snapshots since date
          * @param {string} [until] - ISO8601 Timestamp. Filter all snapshots until date
          * @returns {Promise<Array<object>>}
          */
-        getRoomSnapshots(room_id: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
+        getRoomSnapshots(roomId: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
         /**
          * Delete snapshot
          * @param {string} snapshotId
@@ -728,7 +738,7 @@ declare module "eyeson-node" {
         deleteSnapshot(snapshotId: string): Promise<any>;
         /**
          * Get recording data
-         * @see https://docs.eyeson.com/docs/rest/references/recording#retrieve-recording
+         * @see https://docs.eyeson.com/docs/rest/references/recording
          * @param {string} recordingId
          * @returns {Promise<object>}
          */
@@ -736,14 +746,14 @@ declare module "eyeson-node" {
         /**
          * Retrieve list of all recordings of a certain room
          * @see https://docs.eyeson.com/docs/rest/references/recording#retrieve-list-of-all-recordings-of-a-certain-room
-         * @param {string} room_id
+         * @param {string} roomId
          * @param {number} [page] - Fetch next set of recordings (limit is 25)
          * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
          * @param {string} [since] - ISO8601 Timestamp. Filter all recordings since date
          * @param {string} [until] - ISO8601 Timestamp. Filter all recordings until date
          * @returns {Promise<Array<object>>}
          */
-        getRoomRecordings(room_id: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
+        getRoomRecordings(roomId: string, page?: number, started_at?: string, since?: string, until?: string): Promise<Array<object>>;
         /**
          * Delete recording
          * @param {string} recordingId
@@ -754,17 +764,41 @@ declare module "eyeson-node" {
          * Retrieve list of all participants (users) of a certain room
          * Optional filter for online users
          * @see https://docs.eyeson.com/docs/rest/references/user#get-list-of-meeting-participants-users
-         * @param {string} room_id
+         * @param {string} roomId
          * @param {boolean|null} isOnline
          * @returns {Promise<Array<object>>}
          */
-        getRoomUsers(room_id: string, isOnline?: boolean | null): Promise<Array<object>>;
+        getRoomUsers(roomId: string, isOnline?: boolean | null): Promise<Array<object>>;
         /**
          * Create a room forward instance
-         * @param {string} room_id
+         * @param {string} roomId
          * @returns {RoomForward} forward
          */
-        createRoomForward(room_id: string): RoomForward;
+        createRoomForward(roomId: string): RoomForward;
+        /**
+         * Shutdown meeting room
+         * @param {string} roomId
+         * @returns {Promise}
+         */
+        shutdownRoom(roomId: string): Promise<any>;
+        /**
+         * Register a webhook
+         * @see https://docs.eyeson.com/docs/rest/advanced/register_webhooks
+         * @param {string} url
+         * @param {string} [types] - comma-seperated list of types. default: room_update
+         * @returns {Promise<object>} webhook
+         */
+        registerWebhook(url: string, types?: string): Promise<object>;
+        /**
+         * Get currently registered webhook
+         * @returns {Promise<object|null>} webhook or null
+         */
+        getWebhook(): Promise<object | null>;
+        /**
+         * Clear current webhook if any
+         * @returns {Promise}
+         */
+        clearWebhook(): Promise<any>;
     }
     namespace Eyeson {
         export { EyesonConfig, UserParameters, AudioInsertPosition, CustomFieldOptions, MeetingOptions, MeetingParameters };

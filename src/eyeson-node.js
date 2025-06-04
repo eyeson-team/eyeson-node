@@ -63,7 +63,7 @@ class Eyeson {
      * Meeting observer
      * emits "connected", "disconnected", and "event"
      * Events can be found here:
-     * @see https://docs.eyeson.com/docs/category/meeting-observer
+     * @see https://docs.eyeson.com/docs/rest/advanced/meeting_observer
      */
     this.observer = new observer.Observer({ hostname, ...config })
     this.permalink = new permalink.PermalinkAPI(this.api)
@@ -71,7 +71,7 @@ class Eyeson {
 
   /**
    * Create a new meeting or join an existing by roomId
-   * @see https://docs.eyeson.com/docs/rest/references/room
+   * @see https://docs.eyeson.com/docs/rest/references/meeting-room
    * @param {string} username - Display name of the user
    * @param {string|null} [roomId] - If not set, a random id will be returned
    * @param {MeetingParameters} [params] - { name: ..., user: {...}, options: {...} }
@@ -144,7 +144,7 @@ class Eyeson {
 
   /**
    * Get snapshot data
-   * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-snapshot
+   * @see https://docs.eyeson.com/docs/rest/references/snapshot
    * @param {string} snapshotId
    * @returns {Promise<object>}
    */
@@ -154,15 +154,15 @@ class Eyeson {
 
   /**
    * Retrieve list of all snapshots of a certain room
-   * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-list-of-all-snapshots-of-a-certain-room
-   * @param {string} room_id
+   * @see https://docs.eyeson.com/docs/rest/references/snapshot#retrieve-list-of-all-snapshots-of-a-room
+   * @param {string} roomId
    * @param {number} [page] - Fetch next set of recordings (limit is 25)
    * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
    * @param {string} [since] - ISO8601 Timestamp. Filter all snapshots since date
    * @param {string} [until] - ISO8601 Timestamp. Filter all snapshots until date
    * @returns {Promise<Array<object>>}
    */
-  getRoomSnapshots(room_id, page, started_at, since, until) {
+  getRoomSnapshots(roomId, page, started_at, since, until) {
     const params = new URLSearchParams()
     if (typeof page === 'number') {
       params.set('page', page)
@@ -176,7 +176,7 @@ class Eyeson {
     if (typeof until == 'string' && until !== '') {
       params.set('until', until)
     }
-    let url = `/rooms/${room_id}/snapshots`
+    let url = `/rooms/${roomId}/snapshots`
     if (params.size > 0) {
       url += '?' + params.toString()
     }
@@ -194,7 +194,7 @@ class Eyeson {
 
   /**
    * Get recording data
-   * @see https://docs.eyeson.com/docs/rest/references/recording#retrieve-recording
+   * @see https://docs.eyeson.com/docs/rest/references/recording
    * @param {string} recordingId
    * @returns {Promise<object>}
    */
@@ -205,14 +205,14 @@ class Eyeson {
   /**
    * Retrieve list of all recordings of a certain room
    * @see https://docs.eyeson.com/docs/rest/references/recording#retrieve-list-of-all-recordings-of-a-certain-room
-   * @param {string} room_id
+   * @param {string} roomId
    * @param {number} [page] - Fetch next set of recordings (limit is 25)
    * @param {string} [started_at] - ISO8601 Timestamp. Filter for a certain room instance (compare to started_at in room response)
    * @param {string} [since] - ISO8601 Timestamp. Filter all recordings since date
    * @param {string} [until] - ISO8601 Timestamp. Filter all recordings until date
    * @returns {Promise<Array<object>>}
    */
-  getRoomRecordings(room_id, page, started_at, since, until) {
+  getRoomRecordings(roomId, page, started_at, since, until) {
     const params = new URLSearchParams()
     if (typeof page === 'number') {
       params.set('page', page)
@@ -226,7 +226,7 @@ class Eyeson {
     if (typeof until == 'string' && until !== '') {
       params.set('until', until)
     }
-    let url = `/rooms/${room_id}/recordings`
+    let url = `/rooms/${roomId}/recordings`
     if (params.size > 0) {
       url += '?' + params.toString()
     }
@@ -246,16 +246,16 @@ class Eyeson {
    * Retrieve list of all participants (users) of a certain room
    * Optional filter for online users
    * @see https://docs.eyeson.com/docs/rest/references/user#get-list-of-meeting-participants-users
-   * @param {string} room_id 
+   * @param {string} roomId 
    * @param {boolean|null} isOnline 
    * @returns {Promise<Array<object>>}
    */
-  getRoomUsers(room_id, isOnline = null) {
+  getRoomUsers(roomId, isOnline = null) {
     const params = new URLSearchParams()
     if (typeof isOnline === 'boolean') {
       params.set('online', isOnline)
     }
-    let url = `/rooms/${room_id}/users`
+    let url = `/rooms/${roomId}/users`
     if (params.size > 0) {
       url += '?' + params.toString()
     }
@@ -264,11 +264,64 @@ class Eyeson {
 
   /**
    * Create a room forward instance
-   * @param {string} room_id 
+   * @param {string} roomId
    * @returns {RoomForward} forward
    */
-  createRoomForward(room_id) {
-    return new RoomForward(this.api, room_id)
+  createRoomForward(roomId) {
+    return new RoomForward(this.api, roomId)
+  }
+
+  /**
+   * Shutdown meeting room
+   * @param {string} roomId
+   * @returns {Promise}
+   */
+  shutdownRoom(roomId) {
+    return this.api.delete(`/rooms/${roomId}`)
+  }
+
+  /**
+   * Register a webhook
+   * @see https://docs.eyeson.com/docs/rest/advanced/register_webhooks
+   * @param {string} url
+   * @param {string} [types] - comma-seperated list of types. default: room_update
+   * @returns {Promise<object>} webhook
+   */
+  registerWebhook(url, types = 'room_update') {
+    return new Promise((resolve, reject) => {
+      if (!url) {
+        return reject('URL is required.')
+      }
+      this.api.post('/webhooks', { url, types })
+        .then(() => this.getWebhook())
+        .then(webhook => resolve(webhook))
+        .catch(err => reject(err))
+    })
+  }
+
+  /**
+   * Get currently registered webhook
+   * @returns {Promise<object|null>} webhook or null
+   */
+  getWebhook() {
+    return this.api.get('/webhooks')
+  }
+
+  /**
+   * Clear current webhook if any
+   * @returns {Promise}
+   */
+  clearWebhook() {
+    return new Promise((resolve, reject) => {
+      this.getWebhook()
+        .then(webhook => {
+          if (webhook) {
+            return this.api.delete(`/webhooks/${webhook.id}`)
+          }
+        })
+        .then(() => resolve())
+        .catch(err => reject(err))
+    })
   }
 }
 

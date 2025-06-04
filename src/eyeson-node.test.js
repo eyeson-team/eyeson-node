@@ -162,3 +162,14 @@ describe('user.stop', () => {
     await user.stopMeeting()
   })
 })
+
+describe('webhook', () => {
+  it('provides a method to register a webhook', async () => {
+    const webhook = await eyeson.registerWebhook('https://', 'room_update')
+    expect(webhook.id).toEqual('webhook-id');
+  })
+
+  it('provides a method to clear webhook', async () => {
+    await eyeson.clearWebhook()
+  })
+})

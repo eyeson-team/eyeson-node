@@ -14,6 +14,10 @@ const mockRecording = {
   id: 'recording-id',
 }
 
+const mockWebhook = {
+  id: 'webhook-id',
+}
+
 const mockResponses = {
   post: {
     '/rooms': mockRoom,
@@ -26,6 +30,7 @@ const mockResponses = {
     '/rooms/access-key/snapshot': {},
     '/rooms/access-key/lock': {},
     '/guests/guest-token': mockRoom,
+    '/webhooks': {},
   },
   get: {
     '/rooms/access-key': mockRoom,
@@ -33,6 +38,7 @@ const mockResponses = {
     '/rooms/room-id/recordings': [],
     '/snapshots/snapshot-id': mockSnapshot,
     '/recordings/recording-id': mockRecording,
+    '/webhooks': mockWebhook,
   }
 }
 
