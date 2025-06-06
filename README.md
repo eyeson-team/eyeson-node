@@ -103,6 +103,8 @@ const snapshotInfo = await user.getSnapshot(snapshotId)
 // Lock meeting to prevent new participants
 await user.lockMeeting()
 
+const list = await eyeson.getAllCurrentMeetings();
+
 await eyeson.shutdownRoom(roomId)
 ```
 
@@ -117,12 +119,12 @@ import fsPromise from 'node:fs/promise'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 const user = await eyeson.join(username)
 const imageBuffer = await fsPromise.readFile('./overlay.png')
-await user.sendLayer(imageBuffer, 1)
+await user.sendLayer(imageBuffer, Eyeson.layerForeground)
 // or as jpg:
 const imageBuffer = await fsPromise.readFile('./overlay.jpg')
-await user.sendLayer(imageBuffer, 1)
+await user.sendLayer(imageBuffer, Eyeson.layerForeground)
 // add an ID to check when it can be seen
-await user.sendLayer(imageBuffer, 1, 'overlay-jpg')
+await user.sendLayer(imageBuffer, Eyeson.layerForeground, 'overlay-jpg')
 ```
 
 Using the new [@eyeson/node-layer](https://github.com/eyeson-team/eyeson-node-layer), or [@eyeson/node-svg-layer](https://github.com/eyeson-team/eyeson-node-svg-layer) plugin, you can create and send layers with ease.
@@ -231,7 +233,7 @@ Read about webhooks: https://docs.eyeson.com/docs/rest/advanced/register_webhook
 import Eyeson from '@eyeson/node'
 const eyeson = new Eyeson({ apiKey: '< api-key >' }) // configure to use your api key
 
-await eyeson.registerWebhook('<target-url>', 'room_update')
+await eyeson.registerWebhook('<target-url>', Eyeson.webhookRoom)
 // clear if not used anymore
 await eyeson.clearWebhook()
 ```
@@ -246,6 +248,7 @@ $ npm run build
 
 ## Releases
 
+- 1.5.1 New: getAllCurrentMeetings, static properties
 - 1.5.0 New: getSnapshot, shutdownRoom, webhook functions; update links
 - 1.4.2 New: eyeson.getRoomUsers
 - 1.4.1 Move to @eyeson

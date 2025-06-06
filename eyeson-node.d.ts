@@ -652,6 +652,30 @@ declare module "eyeson-node" {
      */
     class Eyeson {
         /**
+         * A static property for layer z-index "1"
+         * @type {number}
+         * @static
+         */
+        static layerForeground: number;
+        /**
+         * A static property for layer z-index "-1"
+         * @type {number}
+         * @static
+         */
+        static layerBackground: number;
+        /**
+         * A static property for webhook type room update
+         * @type {string}
+         * @static
+         */
+        static webhookRoom: string;
+        /**
+         * A static property for webhook type recording update
+         * @type {string}
+         * @static
+         */
+        static webhookRecording: string;
+        /**
          * @param {EyesonConfig} config
          */
         constructor(config: EyesonConfig);
@@ -712,6 +736,12 @@ declare module "eyeson-node" {
                 locale: string;
             } & Record<string, any>;
         }): Promise<User>;
+        /**
+         * Get list of current running meetings
+         * @see https://docs.eyeson.com/docs/rest/references/meeting-room#get-list-of-current-running-meetings
+         * @returns {Promise<Array<object>>}
+         */
+        getAllCurrentMeetings(): Promise<Array<object>>;
         /**
          * Get snapshot data
          * @see https://docs.eyeson.com/docs/rest/references/snapshot
@@ -785,10 +815,10 @@ declare module "eyeson-node" {
          * Register a webhook
          * @see https://docs.eyeson.com/docs/rest/advanced/register_webhooks
          * @param {string} url
-         * @param {string} [types] - comma-seperated list of types. default: room_update
+         * @param {string|Array<string>} [types] - comma-seperated list of types or array. default: room_update
          * @returns {Promise<object>} webhook
          */
-        registerWebhook(url: string, types?: string): Promise<object>;
+        registerWebhook(url: string, types?: string | Array<string>): Promise<object>;
         /**
          * Get currently registered webhook
          * @returns {Promise<object|null>} webhook or null
