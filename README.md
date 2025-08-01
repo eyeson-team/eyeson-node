@@ -248,6 +248,7 @@ $ npm run build
 
 ## Releases
 
+- 1.5.2 Dependencies update
 - 1.5.1 New: getAllCurrentMeetings, static properties
 - 1.5.0 New: getSnapshot, shutdownRoom, webhook functions; update links
 - 1.4.2 New: eyeson.getRoomUsers
